@@ -1,0 +1,33 @@
+﻿<Properties StartupConfiguration="{7B7CDD1A-A1FA-4F28-8E6E-771185636BC4}|Default">
+  <MonoDevelop.Ide.ItemProperties.efishingAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
+  <MonoDevelop.Ide.Workbench ActiveDocument=".gitignore">
+    <Files>
+      <File FileName="Models/Product.cs" Line="1" Column="1" />
+      <File FileName="Startup.cs" Line="49" Column="86" />
+      <File FileName="helpers/Jwt.cs" Line="16" Column="45" />
+      <File FileName="JsonModels/JsonAppSettings.cs" Line="6" Column="43" />
+      <File FileName="Controllers/UsersController.cs" Line="95" Column="41" />
+      <File FileName="JsonModels/JsonUser.cs" Line="9" Column="41" />
+      <File FileName="appsettings.json" Line="2" Column="15" />
+      <File FileName=".gitignore" Line="1" Column="1" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="efishingAPI" expanded="True">
+            <Node name="efishingAPI" expanded="True">
+              <Node name="Dependencies" expanded="True" />
+              <Node name=".gitignore" selected="True" />
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
