@@ -10,6 +10,7 @@ using Azure;
 using efishingAPI.helpers;
 using efishingAPI.Context;
 using efishingAPI.Models;
+using System.IO;
 
 namespace efishingAPI.Controllers
 {
@@ -28,17 +29,6 @@ namespace efishingAPI.Controllers
             DbContext = Db;
         }
 
-        /*
-        [HttpGet("{name}")]
-        public string GetAsync (string name)
-        {
-            BlobContainerClient container = Client.GetBlobContainerClient("images");
-            BlobClient blob = container.GetBlobClient(name);
-            //Response<BlobDownloadInfo> downloadinfo = await blob.DownloadAsync();
-            return blob.Uri.AbsoluteUri;
-        }
-        */
-
         [HttpGet]
         public async Task<ActionResult> GetProductUris(string id)
         {
@@ -47,12 +37,12 @@ namespace efishingAPI.Controllers
             var response = containerClient.GetBlobsAsync(prefix: id+"/");
             //var response = containerClient.GetBlobsAsync();
 
-            List<object> res = new List<object>();
+            List<string> res = new List<string>();
             await foreach (var item in response)
             {
                 //here you can concatenate the container url with blob name
                 string blob_url = container_url + "/" + item.Name;
-                res.Add(new { uri = blob_url });
+                res.Add(blob_url);
             }
             return Ok(new { uris = res });
         }
@@ -74,8 +64,12 @@ namespace efishingAPI.Controllers
 
             try
             {
+                FileInfo fi = new FileInfo(file.FileName);
+                string fileName =
+                    id + new Random().Next(1, 999999).ToString() + (char)new Random().Next(34, 124) + fi.Extension;
+
                 var blobContainer = Client.GetBlobContainerClient("images");
-                var blobClient = blobContainer.GetBlobClient(id + "/" + file.FileName);
+                var blobClient = blobContainer.GetBlobClient(id + "/" + fileName);
                 await blobClient.UploadAsync(file.OpenReadStream());
                 return Ok("Image uploaded successfully");
             }
@@ -84,20 +78,44 @@ namespace efishingAPI.Controllers
                 return StatusCode(500, "Error while trying to upload");
             }
         }
+        
+
 
         /*
         [HttpPost]
-        public async Task Upload(IFormFileCollection files, string id)
+        public async Task<ActionResult> UploadImages(IFormFileCollection files, string id)
         {
-            var blobContainer = Client.GetBlobContainerClient("images");
+            var jwt = HttpContext.Request.Cookies["jwt"];
+            var token = Jwt.verify(jwt);
+            int userId = int.Parse(token.Issuer);
 
-            foreach(IFormFile file in files)
+            User finded = await DbContext.Users.FindAsync(userId);
+
+            if (!finded.admin)
             {
-                var blobClient = blobContainer.GetBlobClient(id + "/" + file.FileName);
-                await blobClient.UploadAsync(file.OpenReadStream());
+                return Unauthorized("You don't have permissions");
             }
 
+            try
+            {
+                var blobContainer = Client.GetBlobContainerClient("images");
+                int cont = 1;
+                foreach (IFormFile file in files)
+                {
+                    FileInfo fi = new FileInfo(file.FileName);
+                    string fileName = id+cont.ToString()+fi.Extension;
+                    var blobClient = blobContainer.GetBlobClient(id + "/" + fileName);
+                    await blobClient.UploadAsync(file.OpenReadStream());
+                    cont++;
+                }
+                return Ok("Images uploaded successfully");
+            }
+            catch
+            {
+                return StatusCode(500, "Error while trying to upload");
+            }
         }
         */
+        
     }
 }
