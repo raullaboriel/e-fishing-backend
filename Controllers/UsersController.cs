@@ -46,6 +46,11 @@ namespace efishingAPI.Controllers
                     return BadRequest("Email its invalid");
                 }
 
+                if(o.password.Length < 8)
+                {
+                    return BadRequest("Invalid password");
+                }
+
 
                 User user = new User();
                 user.name = o.name;
@@ -117,6 +122,44 @@ namespace efishingAPI.Controllers
             {
                 return StatusCode(500, "Error while trying to login");
             }
+        }
+
+        [HttpPost("user")]
+        public async Task<ActionResult> GetUser ()
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                User finded = await Db.Users.FindAsync(userId);
+
+                var response = new {
+                    name = finded.name,
+                    lastname = finded.lastname,
+                    email = finded.email,
+                    admin = finded.admin
+                };
+
+                return Ok(response);
+            }
+            catch
+            {
+                return Unauthorized("Invalid jwt");
+            }
+        }
+
+        [HttpPost("logout")]
+        public IActionResult Logout()
+        {
+            HttpContext.Response.Cookies.Delete("jwt", new CookieOptions()
+            {
+                HttpOnly = true,
+                SameSite = SameSiteMode.None,
+                Secure = true
+            });
+            return Ok();
         }
     }
 }

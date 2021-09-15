@@ -20,5 +20,6 @@ namespace efishingAPI.Models
         public string password { get; set; }
         [Required]
         public bool admin { get; set; }
+
     }
 }

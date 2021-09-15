@@ -79,9 +79,23 @@ namespace efishingAPI.Controllers
             }
         }
         
+        [HttpDelete("{name}")]
+        public async Task<ActionResult> DeleteImage(string id, string name)
+        {
+            BlobContainerClient container = Client.GetBlobContainerClient("images");
+            BlobClient blob = container.GetBlobClient(id+"/"+name);
+            try
+            {
+                await blob.DeleteAsync();
+                return Ok("Image deleted successfully");
+            }
+            catch
+            {
+                return BadRequest("Error while trying to delete image");
+            }
+        }
 
-
-        /*
+        /* 
         [HttpPost]
         public async Task<ActionResult> UploadImages(IFormFileCollection files, string id)
         {

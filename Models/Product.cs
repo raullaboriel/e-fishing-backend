@@ -10,22 +10,22 @@ namespace efishingAPI.Models
         [Key]
         public int id { get; set; }
         [Required]
-        [StringLength(50)]
+        [StringLength(250)]
         public string name { get; set; }
         [Required]
-        [StringLength(40)]
+        [StringLength(150)]
         public string brand { get; set; }
         [Required]
         [Column(TypeName = "decimal(15, 2)")]
         public decimal price { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(150)]
         public string model { get; set; }
         [Required]
         [StringLength(2000)]
         public string description { get; set; }
         [Required]
-        [StringLength(30)]
+        [StringLength(150)]
         public string category { get; set; }
         [Column(TypeName = "decimal(10, 3)")]
         public decimal size { get; set; }

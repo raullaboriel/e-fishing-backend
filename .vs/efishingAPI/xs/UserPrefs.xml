@@ -1,11 +1,12 @@
 ﻿<Properties StartupConfiguration="{7B7CDD1A-A1FA-4F28-8E6E-771185636BC4}|Default">
   <MonoDevelop.Ide.ItemProperties.efishingAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ImagesController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JsonModels/JsonAppSettings.cs">
     <Files>
-      <File FileName="Models/Product.cs" Line="27" Column="19" />
-      <File FileName="JsonModels/JsonAppSettings.cs" />
-      <File FileName="Controllers/UsersController.cs" Line="14" Column="2" />
-      <File FileName="Controllers/ImagesController.cs" Line="59" Column="1" />
+      <File FileName="Controllers/UsersController.cs" Line="163" Column="10" />
+      <File FileName="Controllers/ProductsController.cs" Line="139" Column="21" />
+      <File FileName="Models/Product.cs" />
+      <File FileName="JsonModels/JsonProduct.cs" />
+      <File FileName="JsonModels/JsonAppSettings.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,10 +16,11 @@
               <Node name="Dependencies" expanded="True">
                 <Node name="PackageDependencies" expanded="True" />
               </Node>
-              <Node name="Controllers" expanded="True">
-                <Node name="ImagesController.cs" selected="True" />
+              <Node name="Context" expanded="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="JsonModels" expanded="True">
+                <Node name="JsonAppSettings.cs" selected="True" />
               </Node>
-              <Node name="JsonModels" expanded="True" />
               <Node name="Models" expanded="True" />
             </Node>
           </Node>

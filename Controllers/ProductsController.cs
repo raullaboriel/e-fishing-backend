@@ -28,23 +28,23 @@ namespace efishingAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<List<JsonProduct>>> GetProducts()
         {
-            var query = from e in DbContext.Products
-                        select new JsonProduct
-                        {
-                            id = e.id,
-                            name = e.name,
-                            brand = e.brand,
-                            price = e.price,
-                            model = e.model,
-                            description = e.description,
-                            category = e.category,
-                            size = e.size,
-                            weight = e.weight,
-                            stock = e.stock
-                        };
-                List<JsonProduct> ProductList = await query.ToListAsync();
             try
             {
+                var query = from e in DbContext.Products
+                            select new JsonProduct
+                            {
+                                id = e.id,
+                                name = e.name,
+                                brand = e.brand,
+                                price = e.price,
+                                model = e.model,
+                                description = e.description,
+                                category = e.category,
+                                size = e.size,
+                                weight = e.weight,
+                                stock = e.stock
+                            };
+                List<JsonProduct> ProductList = await query.ToListAsync();
                 return Ok(ProductList);
             }
             catch
@@ -116,6 +116,52 @@ namespace efishingAPI.Controllers
             catch
             {
                 return StatusCode(401, new { message = "Error while trying to add product"});
+            }
+        }
+
+        [HttpGet("categories")]
+        public async Task<ActionResult> GetCategories()
+        {
+            try
+            {
+                var query = (from e in DbContext.Products
+                             select e.category).Distinct();
+                List<string> categories = await query.ToListAsync();
+                return Ok(new { categories = categories });
+            }
+            catch
+            {
+                return StatusCode(500, "Error while trying to get categories");
+            }
+
+        }
+
+        [HttpGet("by")]
+        public async Task<ActionResult> GetProductsBy(string category)
+        {
+            try
+            {
+                var query = from e in DbContext.Products
+                            where e.category.Equals(category)
+                            select new JsonProduct
+                            {
+                                id = e.id,
+                                name = e.name,
+                                brand = e.brand,
+                                price = e.price,
+                                model = e.model,
+                                description = e.description,
+                                category = e.category,
+                                size = e.size,
+                                weight = e.weight,
+                                stock = e.stock
+                            };
+                List<JsonProduct> ProductList = await query.ToListAsync();
+                return Ok(ProductList);
+            }
+            catch
+            {
+                return BadRequest();
             }
         }
     }
