@@ -36,7 +36,7 @@ namespace efishingAPI.Controllers
                               join Product in DbContext.Products
                               on CartProduct.id_product equals Product.id into joined
                               from j in joined.DefaultIfEmpty()
-                              where CartProduct.id_user == 1
+                              where CartProduct.id_user == userId
                               select new
                               {
                                   id = j.id,
