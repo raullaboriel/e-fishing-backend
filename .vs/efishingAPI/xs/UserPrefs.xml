@@ -1,25 +1,24 @@
 ﻿<Properties StartupConfiguration="{7B7CDD1A-A1FA-4F28-8E6E-771185636BC4}|Default">
   <MonoDevelop.Ide.ItemProperties.efishingAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="JsonModels/JsonAppSettings.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CartProductsController.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="163" Column="10" />
-      <File FileName="Controllers/ProductsController.cs" Line="139" Column="21" />
-      <File FileName="Models/Product.cs" />
-      <File FileName="JsonModels/JsonProduct.cs" />
-      <File FileName="JsonModels/JsonAppSettings.cs" Line="1" Column="1" />
+      <File FileName="Controllers/UsersController.cs" Line="132" Column="1" />
+      <File FileName="Controllers/ProductsController.cs" Line="20" Column="1" />
+      <File FileName="Models/Product.cs" Line="37" Column="1" />
+      <File FileName="Model/Product.cs" Line="50" Column="1" />
+      <File FileName="Models/CartProduct.cs" Line="11" Column="36" />
+      <File FileName="Models/User.cs" Line="1" Column="1" />
+      <File FileName="Context/eFishing.cs" Line="1" Column="1" />
+      <File FileName="Controllers/CartProductsController.cs" Line="21" Column="10" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="efishingAPI" expanded="True">
             <Node name="efishingAPI" expanded="True">
-              <Node name="Dependencies" expanded="True">
-                <Node name="PackageDependencies" expanded="True" />
-              </Node>
               <Node name="Context" expanded="True" />
-              <Node name="Controllers" expanded="True" />
-              <Node name="JsonModels" expanded="True">
-                <Node name="JsonAppSettings.cs" selected="True" />
+              <Node name="Controllers" expanded="True">
+                <Node name="CartProductsController.cs" selected="True" />
               </Node>
               <Node name="Models" expanded="True" />
             </Node>

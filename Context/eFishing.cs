@@ -12,5 +12,7 @@ namespace efishingAPI.Context
         }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<CartProduct> CartProducts { get; set; }
+
     }
 }
