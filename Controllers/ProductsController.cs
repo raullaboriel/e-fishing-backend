@@ -106,7 +106,6 @@ namespace efishingAPI.Controllers
             product.size = e.size;
             product.weight = e.weight;
             product.stock = e.stock;
-
             try
             {
                 await DbContext.Products.AddAsync(product);

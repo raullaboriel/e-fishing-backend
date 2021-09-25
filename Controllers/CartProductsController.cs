@@ -23,7 +23,7 @@ namespace efishingAPI.Controllers
             Jwt = _jwt;
         }
 
-        [HttpPost]
+        [HttpPost("Cart")]
         public async Task<ActionResult> GetCartProducts()
         {
             try
@@ -57,6 +57,82 @@ namespace efishingAPI.Controllers
             catch
             {
                 return BadRequest("Invalid token");
+            }
+        }
+
+        [HttpPut]
+        public async Task<ActionResult> PutCartProduct(CartProduct product)
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var query = from cartProduct in DbContext.CartProducts
+                            where cartProduct.id_user == userId && cartProduct.id_product == product.id_product
+                            select new
+                            {
+                                id = cartProduct.id
+                            };
+                var result = await query.SingleAsync();
+                CartProduct finded = await DbContext.CartProducts.FindAsync(result.id);
+                finded.amount = product.amount;
+
+                await DbContext.SaveChangesAsync();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest("Error while trying to modify cart");
+            }
+        }
+
+        [HttpPost]
+        public async Task<ActionResult> PostCartProduct(CartProduct cartProduct)
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                cartProduct.id_user = userId;
+
+                await DbContext.CartProducts.AddAsync(cartProduct);
+                await DbContext.SaveChangesAsync();
+                return Ok();
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpDelete("{idProduct}")]
+        public async Task<ActionResult> DeleteCartProduct(int idProduct)
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                var query = from cp in DbContext.CartProducts
+                            where cp.id_user == userId && cp.id_product == idProduct
+                            select new
+                            {
+                                id = cp.id
+                            };
+                var result = await query.SingleAsync();
+                CartProduct finded = await DbContext.CartProducts.FindAsync(result.id);
+                DbContext.CartProducts.Remove(finded);
+                await DbContext.SaveChangesAsync();
+                return Ok(finded);
+            }
+            catch
+            {
+                return BadRequest();
             }
 
         }
