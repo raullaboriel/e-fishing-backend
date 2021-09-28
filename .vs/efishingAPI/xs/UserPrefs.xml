@@ -1,12 +1,12 @@
 ﻿<Properties StartupConfiguration="{7B7CDD1A-A1FA-4F28-8E6E-771185636BC4}|Default">
   <MonoDevelop.Ide.ItemProperties.efishingAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/CartProductsController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/UsersController.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="132" Column="1" />
-      <File FileName="Controllers/ProductsController.cs" Line="108" Column="36" />
-      <File FileName="Models/Product.cs" Line="1" Column="1" />
-      <File FileName="Models/CartProduct.cs" Line="1" Column="1" />
-      <File FileName="Controllers/CartProductsController.cs" Line="94" Column="1" />
+      <File FileName="Controllers/UsersController.cs" Line="188" Column="30" />
+      <File FileName="Controllers/ProductsController.cs" />
+      <File FileName="Models/Product.cs" />
+      <File FileName="Models/CartProduct.cs" />
+      <File FileName="JsonModels/JsonEditPassword.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -15,7 +15,7 @@
             <Node name="efishingAPI" expanded="True">
               <Node name="Context" expanded="True" />
               <Node name="Controllers" expanded="True">
-                <Node name="CartProductsController.cs" selected="True" />
+                <Node name="UsersController.cs" selected="True" />
               </Node>
               <Node name="JsonModels" expanded="True" />
               <Node name="Models" expanded="True" />

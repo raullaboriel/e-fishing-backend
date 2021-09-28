@@ -135,7 +135,8 @@ namespace efishingAPI.Controllers
 
                 User finded = await Db.Users.FindAsync(userId);
 
-                var response = new {
+                var response = new
+                {
                     name = finded.name,
                     lastname = finded.lastname,
                     email = finded.email,
@@ -146,7 +147,7 @@ namespace efishingAPI.Controllers
             }
             catch
             {
-                return Unauthorized("Invalid jwt");
+                return StatusCode(204, "No user logged");
             }
         }
 
@@ -160,6 +161,113 @@ namespace efishingAPI.Controllers
                 Secure = true
             });
             return Ok();
+        }
+
+        /*Account modifies methods*/
+        [HttpPut("EditName")]
+        public async Task<ActionResult> EditName(JsonEditName data)
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                User user = Db.Users.Find(userId);
+
+                //Check if passed names are valid
+                if (!data.IsValidName())
+                {
+                    return BadRequest();
+                }
+
+                user.name = data.name;
+                user.lastname = data.lastname;
+
+                await Db.SaveChangesAsync();
+                return Ok(data);
+            }
+            catch
+            {
+                return BadRequest();
+            }
+        }
+
+        [HttpPut("EditEmail")]
+        public async Task<ActionResult> EditEmail(JsonEditEmail data)
+        {
+            try
+            {
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                User user = Db.Users.Find(userId);
+
+                if(!BCrypt.Net.BCrypt.Verify(data.password, user.password))
+                {
+                    return Unauthorized("Invalid credentials");
+                }
+
+                if (!data.IsValidEmail())
+                {
+                    return BadRequest("Invalid email");
+                }
+
+                var query = from s in Db.Users
+                            where s.email.Equals(data.email)
+                            select new JsonUser
+                            {
+                                email = s.email
+                            };
+
+                List<JsonUser> list = await query.ToListAsync();
+
+                if (list.Count() >= 1)
+                {
+                    return BadRequest("The e-mail is alredy taken");
+                }
+
+                //At this point everything shoud be Ok, so we make the changes
+                user.email = data.email;
+                await Db.SaveChangesAsync();
+                return Ok(data.email);
+            }
+            catch
+            {
+                return BadRequest("No user logged");
+            }
+        }
+
+        [HttpPut("EditPassword")]
+        public async Task<ActionResult> EditPassword(JsonEditPassword data)
+        {
+            try
+            {
+                if (!data.IsValidPassowrd())
+                {
+                    return BadRequest("New password is not valid");
+                }
+
+                var jwt = HttpContext.Request.Cookies["jwt"];
+                var token = Jwt.verify(jwt);
+                int userId = int.Parse(token.Issuer);
+
+                User user = Db.Users.Find(userId);
+
+                if (!BCrypt.Net.BCrypt.Verify(data.currentPassword, user.password))
+                {
+                    return Unauthorized("Invalid credentials");
+                }
+
+                user.password = BCrypt.Net.BCrypt.HashPassword(data.newPassword);
+                await Db.SaveChangesAsync();
+                return Ok("Password successfully changed");
+            }
+            catch
+            {
+                return BadRequest("No user logged");
+            }
         }
     }
 }
