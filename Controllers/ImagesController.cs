@@ -66,7 +66,7 @@ namespace efishingAPI.Controllers
             {
                 FileInfo fi = new FileInfo(file.FileName);
                 string fileName =
-                    id + new Random().Next(1, 999999).ToString() + (char)new Random().Next(34, 124) + fi.Extension;
+                    id + new Random().Next(1, 999999).ToString() + (char)new Random().Next(97, 122) + fi.Extension;
 
                 var blobContainer = Client.GetBlobContainerClient("images");
                 var blobClient = blobContainer.GetBlobClient(id + "/" + fileName);

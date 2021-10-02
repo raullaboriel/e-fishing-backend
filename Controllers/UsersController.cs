@@ -102,7 +102,7 @@ namespace efishingAPI.Controllers
                         HttpOnly = true,
                         SameSite = SameSiteMode.None,
                         Secure = true,
-                        Expires = DateTime.Now.AddMinutes(30)
+                        Expires = DateTime.Now.AddHours(3)
                     });
                     user.password = "";
                     var response = new {
@@ -124,7 +124,7 @@ namespace efishingAPI.Controllers
             }
         }
 
-        [HttpPost("user")]
+        [HttpPost]
         public async Task<ActionResult> GetUser ()
         {
             try
@@ -164,7 +164,7 @@ namespace efishingAPI.Controllers
         }
 
         /*Account modifies methods*/
-        [HttpPut("EditName")]
+        [HttpPut("name")]
         public async Task<ActionResult> EditName(JsonEditName data)
         {
             try
@@ -193,7 +193,7 @@ namespace efishingAPI.Controllers
             }
         }
 
-        [HttpPut("EditEmail")]
+        [HttpPut("email")]
         public async Task<ActionResult> EditEmail(JsonEditEmail data)
         {
             try
@@ -239,7 +239,7 @@ namespace efishingAPI.Controllers
             }
         }
 
-        [HttpPut("EditPassword")]
+        [HttpPut("password")]
         public async Task<ActionResult> EditPassword(JsonEditPassword data)
         {
             try
@@ -268,6 +268,26 @@ namespace efishingAPI.Controllers
             {
                 return BadRequest("No user logged");
             }
+        }
+
+        [HttpPost("validate")]
+        public async Task<ActionResult> Validate(JsonValidate data)
+        {
+            var query = from user in Db.Users
+                        where user.email.Equals(data.email)
+                        select new JsonValidate
+                        {
+                            email = user.email
+                        };
+
+            var results = await query.ToListAsync();
+
+            if(results.Count() != 0)
+            {
+                return Ok("email_taken");
+            }
+
+            return Ok();
         }
     }
 }
