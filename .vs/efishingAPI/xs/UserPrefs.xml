@@ -1,14 +1,9 @@
 ﻿<Properties StartupConfiguration="{7B7CDD1A-A1FA-4F28-8E6E-771185636BC4}|Default">
   <MonoDevelop.Ide.ItemProperties.efishingAPI PreferredExecutionTarget="/Applications/Google Chrome.app" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Controllers/ImagesController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="JsonModels/JsonLogin.cs">
     <Files>
-      <File FileName="Controllers/UsersController.cs" Line="93" Column="27" />
-      <File FileName="JsonModels/JsonValidate.cs" />
-      <File FileName="Models/Product.cs" />
-      <File FileName="Models/User.cs" />
-      <File FileName="Models/CartProduct.cs" />
-      <File FileName="appsettings.json" />
-      <File FileName="Controllers/ImagesController.cs" Line="69" Column="99" />
+      <File FileName="Controllers/UsersController.cs" Line="80" Column="58" />
+      <File FileName="JsonModels/JsonLogin.cs" Line="7" Column="45" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -16,10 +11,10 @@
           <Node name="efishingAPI" expanded="True">
             <Node name="efishingAPI" expanded="True">
               <Node name="Context" expanded="True" />
-              <Node name="Controllers" expanded="True">
-                <Node name="ImagesController.cs" selected="True" />
+              <Node name="Controllers" expanded="True" />
+              <Node name="JsonModels" expanded="True">
+                <Node name="JsonLogin.cs" selected="True" />
               </Node>
-              <Node name="JsonModels" expanded="True" />
               <Node name="Models" expanded="True" />
             </Node>
           </Node>

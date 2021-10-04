@@ -77,41 +77,50 @@ namespace efishingAPI.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<ActionResult> PostLogin(JsonLogin o)
+        public async Task<ActionResult> PostLogin(JsonLogin data)
         {
-            o.email = o.email.ToLower();
-            var query = from e in Db.Users
-                        where e.email.Equals(o.email)
-                        select new JsonUser
-                        {
-                            id = e.id,
-                            email = e.email,
-                            name = e.name,
-                            lastname = e.lastname,
-                            password = e.password,
-                            admin = e.admin
-                        };
-
             try
             {
+                data.email = data.email.ToLower();
+                var query = from e in Db.Users
+                            where e.email.Equals(data.email)
+                            select new JsonUser
+                            {
+                                id = e.id,
+                                email = e.email,
+                                name = e.name,
+                                lastname = e.lastname,
+                                password = e.password,
+                                admin = e.admin
+                            };
                 JsonUser user = await query.SingleAsync();
-                if (BCrypt.Net.BCrypt.Verify(o.password, user.password))
+
+                if (BCrypt.Net.BCrypt.Verify(data.password, user.password))
                 {
                     var jwt = Jwt.generate(user.id);
-                    HttpContext.Response.Cookies.Append("jwt", jwt, new CookieOptions {
-                        HttpOnly = true,
-                        SameSite = SameSiteMode.None,
-                        Secure = true,
-                        Expires = DateTime.Now.AddHours(3)
-                    });
+
+                    if (data.remenberMe)
+                    {
+                        HttpContext.Response.Cookies.Append("jwt", jwt, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            SameSite = SameSiteMode.None,
+                            Secure = true,
+                            Expires = DateTime.Now.AddYears(15)
+                        });
+                    }
+                    else
+                    {
+                        HttpContext.Response.Cookies.Append("jwt", jwt, new CookieOptions
+                        {
+                            HttpOnly = true,
+                            SameSite = SameSiteMode.None,
+                            Secure = true,
+                        });
+                    }
+
                     user.password = "";
-                    var response = new {
-                        name = user.name,
-                        lastname = user.lastname,
-                        email = user.email,
-                        admin = user.admin
-                    };
-                    return Ok(response);
+                    return Ok(user);
                 }
                 else
                 {
